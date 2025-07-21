@@ -1,6 +1,6 @@
 import 'package:edu_financas/application/main.dart';
 import 'package:edu_financas/presentation/main.dart';
-import 'package:edu_financas/routes/app_theme.dart';
+import 'package:edu_financas/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
