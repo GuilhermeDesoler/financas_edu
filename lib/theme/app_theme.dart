@@ -5,6 +5,10 @@ class AppTheme {
   static const Color backgroundColor = Color(0xFF212121);
   static const Color textColor = Colors.white70;
 
+  static ColorScheme get darkColors {
+    return ColorScheme.dark(onSurface: Colors.black);
+  }
+
   static ThemeData get darkTheme {
     return ThemeData(
       brightness: Brightness.dark,

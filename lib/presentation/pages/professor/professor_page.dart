@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 class ProfessorPage extends StatelessWidget {
   const ProfessorPage({super.key});
 
+  List<String> get students => ['Chawee', 'Max', 'Sarah', 'Guilherme'];
+
   @override
   Widget build(BuildContext context) {
     final device = ResponsiveService(context);
@@ -13,11 +15,7 @@ class ProfessorPage extends StatelessWidget {
       body: Column(
         spacing: 16,
         children: [
-          Row(
-            children: [
-              Expanded(child: _warningMessage()),
-            ],
-          ),
+          Row(children: [Expanded(child: _warningMessage())]),
           SectionCard(
             label: 'Painel do professor',
             content: device.isPhone ? _mobileLayout() : _desktopLayout(),
@@ -29,6 +27,7 @@ class ProfessorPage extends StatelessWidget {
 
   Widget _desktopLayout() {
     return Column(
+      spacing: 16,
       children: [
         Row(
           spacing: 16,
@@ -36,6 +35,14 @@ class ProfessorPage extends StatelessWidget {
             Expanded(child: _studentCard()),
             Expanded(child: _usedTotal()),
             Expanded(child: _studentAverage()),
+          ],
+        ),
+        Row(
+          spacing: 16,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(child: _studentList()),
+            Expanded(child: _registerStudentForm()),
           ],
         ),
       ],
@@ -50,6 +57,8 @@ class ProfessorPage extends StatelessWidget {
         _studentCard(),
         _usedTotal(),
         _studentAverage(),
+        _registerStudentForm(),
+        _studentList(),
       ],
     );
   }
@@ -57,7 +66,7 @@ class ProfessorPage extends StatelessWidget {
   Widget _studentCard() {
     return StatisticCard(
       label: 'Total de alunos',
-      amount: '3',
+      amount: students.length.toString(),
       backgroundColor: Colors.indigoAccent,
       textColor: Colors.indigo,
     );
@@ -81,9 +90,62 @@ class ProfessorPage extends StatelessWidget {
     );
   }
 
+  Widget _studentList() {
+    return InfoCard(
+      label: 'Lista de alunos',
+      // content: ListView(
+      //   children: students.map((studentName) {
+      //     return ListTile(
+      //       leading: Icon(Icons.person, size: 18, color: Colors.cyanAccent),
+      //       title: Text(studentName, style: TextStyle(color: Colors.white)),
+      //     );
+      //   }).toList(),
+      // ),
+      content: Column(
+        spacing: 4,
+        children: students.map((studentName) {
+          return ListTile(
+            leading: Icon(Icons.person, size: 18, color: Colors.cyanAccent),
+            title: Text(studentName, style: TextStyle(color: Colors.white)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide(width: 1, color: Colors.grey),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget _registerStudentForm() {
+    return InfoCard(
+      label: 'Controle de fundos',
+      content: Column(
+        spacing: 12,
+        children: [
+          TextField(decoration: InputDecoration(labelText: 'Aluno')),
+          TextField(
+            decoration: InputDecoration(labelText: 'Tipo de transação'),
+          ),
+          TextField(decoration: InputDecoration(labelText: 'Valor')),
+          TextField(decoration: InputDecoration(labelText: 'Descrição')),
+          Row(
+            children: [
+              FilledButton.icon(
+                onPressed: () => print('Cadastrado'),
+                label: Text('Cadastrar'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _warningMessage() {
     return WarningCard(
-        message:
-            'Este aplicativo é destinado exclusivamente para fins educacionais. Todos os valores exibidos são fictícios e não representam transações financeiras reais.');
+      message:
+          'Este aplicativo é destinado exclusivamente para fins educacionais. Todos os valores exibidos são fictícios e não representam transações financeiras reais.',
+    );
   }
 }

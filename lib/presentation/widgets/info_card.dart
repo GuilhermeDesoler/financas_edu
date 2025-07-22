@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SectionCard extends StatelessWidget {
-  const SectionCard({required this.label, required this.content, super.key});
+class InfoCard extends StatelessWidget {
+  const InfoCard({required this.label, required this.content, super.key});
 
   final String label;
   final Widget content;
@@ -16,13 +16,16 @@ class SectionCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.grey),
-        color: Colors.black12,
       ),
       child: Column(
-        spacing: 16,
+        spacing: 4,
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: textTheme.titleMedium),
+          Text(
+            label,
+            style: textTheme.titleMedium?.copyWith(color: Colors.white),
+          ),
           content,
         ],
       ),

@@ -73,9 +73,7 @@ class AuthProvider with ChangeNotifier {
   String? get error => _error;
 
   Future<void> signIn(String email, String password) async {
-    await Future.delayed(Duration(seconds: 4));
-
-    print('email: $email, password: $password');
+    await Future.delayed(Duration(seconds: 1));
 
     if (email == "admin@teste.com" && password == "123456") {
       _isLoggedIn = true;

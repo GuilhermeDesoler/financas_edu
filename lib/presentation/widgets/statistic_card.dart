@@ -20,7 +20,7 @@ class StatisticCard extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: backgroundColor?.withAlpha(78),
@@ -31,9 +31,7 @@ class StatisticCard extends StatelessWidget {
         children: [
           Text(
             label,
-            style: textTheme.labelLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+            style: textTheme.labelLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
             amount,
