@@ -16,6 +16,13 @@ class _LoginFormState extends State<LoginForm> {
   bool _loading = false;
 
   @override
+  void initState() {
+    _emailController.text = "admin@teste.com";
+    _passwordController.text = "123456";
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +31,6 @@ class _LoginFormState extends State<LoginForm> {
       children: [
         Text('Olá! Bem-vindo ao app escolar.'),
         Text('Por favor, faça login para continuar.'),
-
         TextField(
           controller: _emailController,
           decoration: InputDecoration(labelText: 'Email'),
@@ -33,7 +39,6 @@ class _LoginFormState extends State<LoginForm> {
           controller: _passwordController,
           decoration: InputDecoration(labelText: 'Senha'),
         ),
-
         Consumer<AuthProvider>(
           builder: (_, auth, __) {
             return SizedBox(
@@ -54,7 +59,7 @@ class _LoginFormState extends State<LoginForm> {
                         try {
                           await auth.signIn(
                             _emailController.text,
-                            _emailController.text,
+                            _passwordController.text,
                           );
                         } catch (_) {
                           if (context.mounted) {

@@ -10,7 +10,7 @@ enum Roles {
   static Roles fromString(String role) {
     return Roles.values.firstWhere(
       (e) => e.role == role,
-      orElse: () => Roles.student,
+      orElse: () => student,
     );
   }
 }
