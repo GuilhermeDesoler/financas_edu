@@ -9,13 +9,15 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey),
+        border: Border.all(color: colorScheme.outline),
+        color: colorScheme.surfaceContainerHighest,
       ),
       child: Column(
         spacing: 4,
