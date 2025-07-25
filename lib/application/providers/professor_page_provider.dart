@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
-import 'package:edu_financas/data/models/professor_model.dart';
 import 'package:edu_financas/domain/main.dart';
 import 'package:flutter/material.dart';
+
+import '../../data/repositories/main.dart';
 
 class ProfessorPageProvider with ChangeNotifier {
   Professor? _professor;
@@ -17,13 +17,12 @@ class ProfessorPageProvider with ChangeNotifier {
     _professor = null;
     notifyListeners();
 
-    final res = await Dio().get(
-      'https://finances-edu.free.beeceptor.com/professor',
-    );
+    try {
+      _professor = await ProfessorRepository().getProfessorData('');
+    } on Exception catch (e) {
+      debugPrint('Error getting professor data: $e');
+    }
 
-    final professorRespose = ProfessorModel.fromJson(res.data!).toEntity();
-
-    _professor = professorRespose;
     loading = false;
     notifyListeners();
   }
@@ -33,9 +32,8 @@ class ProfessorPageProvider with ChangeNotifier {
       return null;
     }
 
-    final prefessorStudents = _professor!.students.isEmpty
-        ? 1
-        : _professor!.students.length;
+    final prefessorStudents =
+        _professor!.students.isEmpty ? 1 : _professor!.students.length;
 
     return _professor!.spent / prefessorStudents;
   }

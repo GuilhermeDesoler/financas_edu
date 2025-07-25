@@ -1,4 +1,5 @@
 import 'package:edu_financas/application/main.dart';
+import 'package:edu_financas/presentation/widgets/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +13,6 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  bool _loading = false;
 
   @override
   void initState() {
@@ -43,38 +42,15 @@ class _LoginFormState extends State<LoginForm> {
           builder: (_, auth, __) {
             return SizedBox(
               width: double.infinity,
-              child: FilledButton.icon(
-                icon: SizedBox.square(
-                  dimension: 20,
-                  child: _loading
-                      ? CircularProgressIndicator()
-                      : Icon(Icons.login),
+              child: AppButton(
+                label: 'Entrar',
+                icon: Icons.login,
+                disabled: _emailController.text.isEmpty ||
+                    _passwordController.text.isEmpty,
+                onPressed: () async => await auth.signIn(
+                  _emailController.text,
+                  _passwordController.text,
                 ),
-                onPressed: _loading
-                    ? null
-                    : () async {
-                        setState(() {
-                          _loading = true;
-                        });
-                        try {
-                          await auth.signIn(
-                            _emailController.text,
-                            _passwordController.text,
-                          );
-                        } catch (_) {
-                          if (context.mounted) {
-                            setState(() {
-                              _loading = false;
-                            });
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Email ou senha inválidos'),
-                              ),
-                            );
-                          }
-                        }
-                      },
-                label: Text('Entrar'),
               ),
             );
           },

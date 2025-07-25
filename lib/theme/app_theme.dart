@@ -5,9 +5,9 @@ class AppTheme {
     return ColorScheme(
       brightness: Brightness.light,
       primary: Colors.greenAccent,
-      onPrimary: Colors.green,
+      onPrimary: Color(0xFF000000),
       primaryContainer: Colors.greenAccent,
-      onPrimaryContainer: Colors.green,
+      onPrimaryContainer: Color(0xFF000000),
       secondary: Colors.purpleAccent,
       onSecondary: Colors.purple,
       secondaryContainer: Colors.purpleAccent,
@@ -32,9 +32,9 @@ class AppTheme {
     return ColorScheme(
       brightness: Brightness.dark,
       primary: Colors.green,
-      onPrimary: Colors.greenAccent,
+      onPrimary: Color(0xFFFFFFFF),
       primaryContainer: Colors.green,
-      onPrimaryContainer: Colors.greenAccent,
+      onPrimaryContainer: Color(0xFFFFFFFF),
       secondary: Colors.purple,
       onSecondary: Colors.purpleAccent,
       secondaryContainer: Colors.purple,
@@ -60,33 +60,26 @@ class AppTheme {
       displayLarge: TextStyle(
         fontSize: 57,
         fontWeight: FontWeight.w400,
-        height: 64 / 57,
-        letterSpacing: -0.25,
       ),
       displayMedium: TextStyle(
         fontSize: 45,
         fontWeight: FontWeight.w400,
-        height: 52 / 45,
       ),
       displaySmall: TextStyle(
         fontSize: 36,
         fontWeight: FontWeight.w400,
-        height: 44 / 36,
       ),
       headlineLarge: TextStyle(
         fontSize: 32,
         fontWeight: FontWeight.w400,
-        height: 40 / 32,
       ),
       headlineMedium: TextStyle(
         fontSize: 28,
         fontWeight: FontWeight.w400,
-        height: 36 / 28,
       ),
       headlineSmall: TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.w400,
-        height: 32 / 24,
       ),
       titleLarge: TextStyle(
         fontSize: 22,
@@ -94,46 +87,36 @@ class AppTheme {
         height: 28 / 22,
       ),
       titleMedium: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+      ),
+      titleSmall: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w500,
-        height: 24 / 16,
-        letterSpacing: 0.15,
       ),
       bodyLarge: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w400,
-        height: 24 / 16,
-        letterSpacing: 0.5,
       ),
       labelLarge: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w500,
-        height: 20 / 14,
-        letterSpacing: 0.1,
       ),
       bodyMedium: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w400,
-        height: 20 / 14,
-        letterSpacing: 0.25,
       ),
       labelMedium: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w500,
-        height: 16 / 12,
-        letterSpacing: 0.5,
       ),
       bodySmall: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w400,
-        height: 16 / 12,
-        letterSpacing: 0.4,
       ),
       labelSmall: TextStyle(
         fontSize: 11,
         fontWeight: FontWeight.w500,
-        height: 16 / 11,
-        letterSpacing: 0.5,
       ),
     ).apply(bodyColor: colors.onSurface, displayColor: colors.onSurface);
   }
@@ -142,80 +125,102 @@ class AppTheme {
     final textTheme = _textTheme(colors);
 
     return ThemeData(
-      brightness: colors.brightness,
-      scaffoldBackgroundColor: colors.surface,
-      fontFamily: 'Ubuntu',
-      textTheme: textTheme,
-      colorScheme: colors,
-      inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: Color(0xFF2A2A2A), //TODO: Check this color (I like it)
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 16,
-          horizontal: 20,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Colors.white24),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: colors.primary, width: 2),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: colors.error),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: colors.error, width: 2),
-        ),
-        hintStyle: TextStyle(
-          color: colors.onSurface,
-          fontWeight: FontWeight.w400,
-        ),
-        labelStyle: TextStyle(color: colors.onSurface),
-      ),
-      //TODO: Style platform buttons
-      filledButtonTheme: FilledButtonThemeData(
-        style: ButtonStyle(
-          backgroundColor: WidgetStatePropertyAll(
-            colors.primary,
+        brightness: colors.brightness,
+        scaffoldBackgroundColor: colors.surface,
+        fontFamily: 'Ubuntu',
+        textTheme: textTheme,
+        colorScheme: colors,
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Color(0xFF2A2A2A), //TODO: Check this color (I like it)
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 16,
+            horizontal: 20,
           ),
-          iconColor: WidgetStatePropertyAll(
-            colors.onPrimary,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide.none,
           ),
-          textStyle: WidgetStatePropertyAll(
-            textTheme.labelLarge?.copyWith(
-              color: colors.onPrimaryContainer,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Colors.white24),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: colors.primary, width: 2),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: colors.error),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: colors.error, width: 2),
+          ),
+          hintStyle: TextStyle(
+            color: colors.onSurface,
+            fontWeight: FontWeight.w400,
+          ),
+          labelStyle: TextStyle(color: colors.onSurface),
+        ),
+        //TODO: Style platform buttons
+        filledButtonTheme: FilledButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(
+              colors.primary,
+            ),
+            textStyle: WidgetStatePropertyAll(textTheme.titleSmall),
+            foregroundColor: WidgetStatePropertyAll(colors.onPrimaryContainer),
+            padding: WidgetStatePropertyAll(const EdgeInsets.all(24)),
+            shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.circular(8),
+              ),
             ),
           ),
-          padding: WidgetStatePropertyAll(
-            const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: ButtonStyle(
+            iconColor: WidgetStatePropertyAll(
+              colors.onPrimaryContainer,
+            ),
+            textStyle: WidgetStatePropertyAll(textTheme.titleSmall),
+            foregroundColor: WidgetStatePropertyAll(colors.onPrimaryContainer),
+            padding: WidgetStatePropertyAll(const EdgeInsets.all(24)),
+            shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.circular(8),
+                side: BorderSide(color: colors.onPrimaryContainer),
+              ),
+            ),
           ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+            style: ButtonStyle(
+          textStyle: WidgetStatePropertyAll(textTheme.titleSmall),
+          foregroundColor: WidgetStatePropertyAll(colors.onPrimaryContainer),
+          padding: WidgetStatePropertyAll(const EdgeInsets.all(24)),
           shape: WidgetStatePropertyAll(
             RoundedRectangleBorder(
               borderRadius: BorderRadiusGeometry.circular(8),
             ),
           ),
-        ),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+        )),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            textStyle:
+                const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
-      ),
-      //TODO: Style Dialog
-      dialogTheme: DialogThemeData(),
-    );
+        //TODO: Style Dialog
+        dialogTheme: DialogThemeData(),
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: colors.onPrimaryContainer,
+        ));
   }
 
   static ThemeData appTheme(bool isDarkMode) {

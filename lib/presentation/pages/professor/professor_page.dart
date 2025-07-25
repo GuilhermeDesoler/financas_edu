@@ -79,12 +79,12 @@ class ProfessorPage extends StatelessWidget {
   }
 
   Widget _refreshButton(ProfessorPageProvider professorProvider) {
-    return TextButton.icon(
-      onPressed: professorProvider.loading ? null : professorProvider.fetchData,
-      label: Text('Buscar'),
-      icon: professorProvider.loading
-          ? CircularProgressIndicator()
-          : Icon(Icons.get_app_outlined),
+    return AppButton(
+      type: ButtonType.outline,
+      label: 'Buscar',
+      icon: Icons.download_outlined,
+      loading: professorProvider.loading,
+      onPressed: professorProvider.fetchData,
     );
   }
 
