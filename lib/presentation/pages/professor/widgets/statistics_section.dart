@@ -60,18 +60,25 @@ class _StatisticsSectionState extends State<StatisticsSection> {
   }
 
   Widget _usedTotal(ColorScheme colorScheme) {
+    final amountSpent =
+        widget.provider.professor?.spent.toStringAsFixed(2) ?? '--';
+
     return StatisticCard(
       label: 'Total distribuído',
-      amount: 'R\$ 150.75',
+      amount: 'R\$ $amountSpent',
       backgroundColor: colorScheme.primaryContainer,
       textColor: colorScheme.onPrimaryContainer,
     );
   }
 
   Widget _studentAverage(ColorScheme colorScheme) {
+    final average = widget.provider.average == null
+        ? '--'
+        : widget.provider.average!.toStringAsFixed(2);
+
     return StatisticCard(
       label: 'Média por aluno',
-      amount: 'R\$ 50.25',
+      amount: 'R\$ $average',
       backgroundColor: colorScheme.secondaryContainer,
       textColor: colorScheme.onSecondaryContainer,
     );

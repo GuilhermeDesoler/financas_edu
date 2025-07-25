@@ -11,6 +11,7 @@ class ProfessorModel {
     required this.email,
     required this.role,
     required this.students,
+    required this.spent,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -20,6 +21,7 @@ class ProfessorModel {
   final String email;
   final String role;
   final List<String> students;
+  final double spent;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -30,6 +32,7 @@ class ProfessorModel {
       email: email,
       role: Roles.fromString(role),
       students: students,
+      spent: spent,
       createdAt: createdAt,
       updatedAt: updatedAt,
     );
@@ -42,22 +45,36 @@ class ProfessorModel {
       email: entity.email,
       role: entity.role.name,
       students: entity.students,
+      spent: entity.spent,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     );
   }
 
-  factory ProfessorModel.fromJson(DocumentSnapshot doc) {
-    final json = doc.data() as Map<String, dynamic>;
+  // factory ProfessorModel.fromJson(DocumentSnapshot doc) {
+  //   final json = doc.data() as Map<String, dynamic>;
 
+  //   return ProfessorModel(
+  //     id: doc.id,
+  //     name: json['name'],
+  //     email: json['email'],
+  //     role: json['role'],
+  //     students: List.from(json['students']),
+  //     createdAt: (json['createdAt'] as Timestamp).toDate(),
+  //     updatedAt: (json['updatedAt'] as Timestamp).toDate(),
+  //   );
+  // }
+
+  factory ProfessorModel.fromJson(Map<String, dynamic> json) {
     return ProfessorModel(
-      id: doc.id,
+      id: json['id'],
       name: json['name'],
       email: json['email'],
       role: json['role'],
       students: List.from(json['students']),
-      createdAt: (json['createdAt'] as Timestamp).toDate(),
-      updatedAt: (json['updatedAt'] as Timestamp).toDate(),
+      spent: json['spent'],
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
     );
   }
 
@@ -67,6 +84,7 @@ class ProfessorModel {
       'email': email,
       'role': role,
       'students': students,
+      'spent': spent,
       'createdAt': Timestamp.fromDate(createdAt),
       'updatedAt': Timestamp.fromDate(updatedAt),
     };

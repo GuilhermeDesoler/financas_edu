@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:edu_financas/data/models/professor_model.dart';
 import 'package:edu_financas/domain/main.dart';
 import 'package:flutter/material.dart';
 
@@ -8,27 +10,33 @@ class ProfessorPageProvider with ChangeNotifier {
   Professor? get professor => _professor;
   List<Student>? get students => _students;
 
-  bool get loading => _professor == null || _students == null;
+  bool loading = true;
 
   fetchData() async {
-    print('step 2');
-    final professorRespose = await Future.delayed(
-      const Duration(seconds: 2),
-      () => Professor(
-        id: '12345',
-        name: 'Chawee',
-        email: 'have-sex-with@me.com',
-        role: Roles.professor,
-        students: ['Chawee', 'Max', 'NewBaby', 'Sarah', 'Guilherme'],
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      ),
+    loading = true;
+    _professor = null;
+    notifyListeners();
+
+    final res = await Dio().get(
+      'https://finances-edu.free.beeceptor.com/professor',
     );
-    final studentsResponse = await Future.delayed(const Duration(seconds: 3));
+
+    final professorRespose = ProfessorModel.fromJson(res.data!).toEntity();
 
     _professor = professorRespose;
-    _students = studentsResponse;
-    print('step 3');
+    loading = false;
     notifyListeners();
+  }
+
+  double? get average {
+    if (_professor == null) {
+      return null;
+    }
+
+    final prefessorStudents = _professor!.students.isEmpty
+        ? 1
+        : _professor!.students.length;
+
+    return _professor!.spent / prefessorStudents;
   }
 }

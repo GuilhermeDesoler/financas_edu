@@ -42,6 +42,10 @@ class ProfessorPage extends StatelessWidget {
     return Column(
       spacing: 16,
       children: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: _refreshButton(professorProvider),
+        ),
         StatisticsSection(provider: professorProvider),
         Row(
           spacing: 16,
@@ -63,10 +67,24 @@ class ProfessorPage extends StatelessWidget {
       spacing: 16,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: _refreshButton(professorProvider),
+        ),
         StatisticsSection(provider: professorProvider),
         _registerStudentForm(),
         StudentsList(provider: professorProvider),
       ],
+    );
+  }
+
+  Widget _refreshButton(ProfessorPageProvider professorProvider) {
+    return TextButton.icon(
+      onPressed: professorProvider.loading ? null : professorProvider.fetchData,
+      label: Text('Buscar'),
+      icon: professorProvider.loading
+          ? CircularProgressIndicator()
+          : Icon(Icons.get_app_outlined),
     );
   }
 

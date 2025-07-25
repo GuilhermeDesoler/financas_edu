@@ -7,6 +7,7 @@ class Professor {
     required this.email,
     required this.role,
     required this.students,
+    required this.spent,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -16,6 +17,7 @@ class Professor {
   final String email;
   final Roles role;
   final List<String> students;
+  final double spent;
   final DateTime createdAt;
   final DateTime updatedAt;
 }
