@@ -1,12 +1,12 @@
 import 'package:edu_financas/application/main.dart';
 import 'package:edu_financas/domain/main.dart';
+import 'package:edu_financas/presentation/pages/professor/widgets/main.dart';
 import 'package:edu_financas/presentation/widgets/main.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfessorPage extends StatelessWidget {
   const ProfessorPage({super.key});
-
-  List<String> get students => ['Chawee', 'Max', 'Sarah', 'Guilherme'];
 
   @override
   Widget build(BuildContext context) {
@@ -15,39 +15,39 @@ class ProfessorPage extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return AppPage(
-      body: Column(
-        spacing: 16,
-        children: [
-          Row(children: [Expanded(child: _warningMessage())]),
-          SectionCard(
-            label: 'Painel do professor',
-            content: device.isPhone
-                ? _mobileLayout(colorScheme)
-                : _desktopLayout(colorScheme),
+    return Consumer<ProfessorPageProvider>(
+      builder: (_, professorProvider, __) {
+        return AppPage(
+          body: Column(
+            spacing: 16,
+            children: [
+              Row(children: [Expanded(child: _warningMessage())]),
+              SectionCard(
+                label: 'Painel do professor',
+                content: device.isPhone
+                    ? _mobileLayout(professorProvider, colorScheme)
+                    : _desktopLayout(professorProvider, colorScheme),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Widget _desktopLayout(ColorScheme colorScheme) {
+  Widget _desktopLayout(
+    ProfessorPageProvider professorProvider,
+    ColorScheme colorScheme,
+  ) {
     return Column(
       spacing: 16,
       children: [
-        Row(
-          spacing: 16,
-          children: [
-            Expanded(child: _studentCard(colorScheme)),
-            Expanded(child: _usedTotal(colorScheme)),
-            Expanded(child: _studentAverage(colorScheme)),
-          ],
-        ),
+        StatisticsSection(provider: professorProvider),
         Row(
           spacing: 16,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(child: _studentList()),
+            Expanded(child: StudentsList(provider: professorProvider)),
             Expanded(child: _registerStudentForm()),
           ],
         ),
@@ -55,67 +55,18 @@ class ProfessorPage extends StatelessWidget {
     );
   }
 
-  Widget _mobileLayout(ColorScheme colorScheme) {
+  Widget _mobileLayout(
+    ProfessorPageProvider professorProvider,
+    ColorScheme colorScheme,
+  ) {
     return Column(
       spacing: 16,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _studentCard(colorScheme),
-        _usedTotal(colorScheme),
-        _studentAverage(colorScheme),
+        StatisticsSection(provider: professorProvider),
         _registerStudentForm(),
-        _studentList(),
+        StudentsList(provider: professorProvider),
       ],
-    );
-  }
-
-  Widget _studentCard(ColorScheme colorScheme) {
-    return StatisticCard(
-      label: 'Total de alunos',
-      amount: students.length.toString(),
-      backgroundColor: colorScheme.tertiaryContainer,
-      textColor: colorScheme.onTertiaryContainer,
-    );
-  }
-
-  Widget _usedTotal(ColorScheme colorScheme) {
-    return StatisticCard(
-      label: 'Total distribuído',
-      amount: 'R\$ 150.75',
-      backgroundColor: colorScheme.primaryContainer,
-      textColor: colorScheme.onPrimaryContainer,
-    );
-  }
-
-  Widget _studentAverage(ColorScheme colorScheme) {
-    return StatisticCard(
-      label: 'Média por aluno',
-      amount: 'R\$ 50.25',
-      backgroundColor: colorScheme.secondaryContainer,
-      textColor: colorScheme.onSecondaryContainer,
-    );
-  }
-
-  Widget _studentList() {
-    return InfoCard(
-      label: 'Lista de alunos',
-      content: Column(
-        spacing: 12,
-        children: students.map((studentName) {
-          return ListTile(
-            leading: Icon(Icons.person, size: 18, color: Colors.cyanAccent),
-            title: Text(studentName, style: TextStyle(color: Colors.white)),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-              side: BorderSide(width: 1, color: Colors.grey),
-            ),
-            trailing: IconButton(
-              onPressed: () => print('Clicked'),
-              icon: Icon(Icons.visibility),
-            ),
-          );
-        }).toList(),
-      ),
     );
   }
 

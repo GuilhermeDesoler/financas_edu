@@ -13,12 +13,13 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => AuthProvider(),
-        ),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider<AppThemeProvider>(
           create: (_) => AppThemeProvider(),
-        )
+        ),
+        ChangeNotifierProvider<ProfessorPageProvider>(
+          create: (_) => ProfessorPageProvider(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -30,15 +31,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppThemeProvider>(builder: (_, theme, __) {
-      theme.getTheme();
+    return Consumer<AppThemeProvider>(
+      builder: (_, theme, __) {
+        theme.getTheme();
 
-      return MaterialApp(
-        title: 'Flutter Demo',
-        theme: AppTheme.appTheme(theme.isDarkMode),
-        home: _routes(),
-      );
-    });
+        return MaterialApp(
+          title: 'Flutter Demo',
+          theme: AppTheme.appTheme(theme.isDarkMode),
+          home: _routes(),
+        );
+      },
+    );
   }
 
   Widget _routes() {
