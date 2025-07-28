@@ -38938,7 +38938,7 @@ case 1:return A.J(q,r)}})
 return A.K($async$$0,r)},
 $S:22}
 A.Im.prototype={
-O(a){var s,r=null,q="images/logo3.png",p=t.p
+O(a){var s,r=null,q="assets/images/logo3.png",p=t.p
 if(A.bI(a,B.cc,t.w).w.a.a<=767){s=A.dj(12)
 p=A.aap(A.fo(A.b([A.nj(r,B.E,new A.d9(r,A.arH(B.l6,new A.pT(q)),r,s,r,r,B.aG),240,r,r,300),new A.r2(r)],p),B.a4,B.H,B.ah,24),r,B.af)}else{s=A.dj(12)
 p=A.l7(new A.dl(B.zl,A.fH(A.b([A.fs(A.nj(r,B.E,new A.d9(r,A.arH(B.l6,new A.pT(q)),r,s,r,r,B.aG),468,r,r,r)),A.fs(A.l7(A.aap(new A.dl(B.zk,new A.r2(r),r),r,B.af),r,r))],p),B.a4,B.H,B.ah,24),r),r,r)}return A.atT(r,A.a8p(!0,new A.cM(B.ff,p,r),B.as,!0))}}

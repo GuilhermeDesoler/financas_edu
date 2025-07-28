@@ -32,7 +32,7 @@ class LoginPage extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
-                    image: AssetImage('images/logo3.png'),
+                    image: AssetImage('assets/images/logo3.png'),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -66,7 +66,7 @@ class LoginPage extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               image: DecorationImage(
-                image: AssetImage('images/logo3.png'),
+                image: AssetImage('assets/images/logo3.png'),
                 fit: BoxFit.fill,
               ),
             ),
