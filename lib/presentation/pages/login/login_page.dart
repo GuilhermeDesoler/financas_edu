@@ -26,7 +26,18 @@ class LoginPage extends StatelessWidget {
         child: Row(
           spacing: 24,
           children: [
-            Expanded(child: Container(height: 240, color: Colors.red)),
+            Expanded(
+              child: Container(
+                height: 468,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  image: DecorationImage(
+                    image: AssetImage('images/logo3.png'),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+            ),
             Expanded(
               child: Center(
                 child: SingleChildScrollView(
@@ -49,7 +60,17 @@ class LoginPage extends StatelessWidget {
         spacing: 24,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(height: 240, width: 300, color: Colors.red),
+          Container(
+            height: 240,
+            width: 300,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              image: DecorationImage(
+                image: AssetImage('images/logo3.png'),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
           LoginForm(),
         ],
       ),

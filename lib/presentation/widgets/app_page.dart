@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AppPage extends StatelessWidget {
-  const AppPage({
-    required this.body,
-    super.key,
-  });
+  const AppPage({required this.body, super.key});
 
   final Widget body;
 
@@ -19,11 +16,7 @@ class AppPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                body,
-              ],
-            ),
+            child: Column(children: [body]),
           ),
         ),
       ),
@@ -37,10 +30,7 @@ class AppPage extends StatelessWidget {
 
     return AppBar(
       backgroundColor: colorScheme.primaryContainer,
-      title: Text(
-        'Poupança Virtual',
-        style: textTheme.titleMedium,
-      ),
+      title: Text('Poupança Virtual', style: textTheme.titleMedium),
       titleTextStyle: TextStyle(color: colorScheme.onPrimary),
       titleSpacing: 4,
       leading: Icon(
@@ -50,21 +40,26 @@ class AppPage extends StatelessWidget {
       ),
       actionsPadding: const EdgeInsets.only(right: 16),
       actions: [
-        Consumer<AppThemeProvider>(builder: (_, theme, __) {
-          return IconButton(
-            onPressed: theme.toggleTheme,
-            icon: theme.isDarkMode
-                ? Icon(Icons.nightlight_outlined)
-                : Icon(Icons.wb_sunny_outlined),
-          );
-        }),
+        Consumer<AppThemeProvider>(
+          builder: (_, theme, __) {
+            return IconButton(
+              // onPressed: theme.toggleTheme,
+              onPressed: null,
+              icon: theme.isDarkMode
+                  ? Icon(Icons.nightlight_outlined)
+                  : Icon(Icons.wb_sunny_outlined),
+            );
+          },
+        ),
         const SizedBox(width: 16),
-        Consumer<AuthProvider>(builder: (_, auth, __) {
-          return IconButton(
-            onPressed: auth.logout,
-            icon: Icon(Icons.logout_outlined),
-          );
-        })
+        Consumer<AuthProvider>(
+          builder: (_, auth, __) {
+            return IconButton(
+              onPressed: auth.logout,
+              icon: Icon(Icons.logout_outlined),
+            );
+          },
+        ),
       ],
     );
   }

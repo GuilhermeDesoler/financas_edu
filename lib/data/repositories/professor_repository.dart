@@ -4,8 +4,9 @@ import 'package:edu_financas/domain/main.dart';
 
 class ProfessorRepository {
   Future<Professor> getProfessorData(String id) async {
-    final res = await RequestService()
-        .get('https://finances-edu.free.beeceptor.com/professor');
+    final res = await RequestService().get(
+      'https://finances-edu.free.beeceptor.com/professor',
+    );
 
     return ProfessorModel.fromJson(res).toEntity();
   }

@@ -23,13 +23,19 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       spacing: 16,
       children: [
-        Text('Olá! Bem-vindo ao app escolar.'),
-        Text('Por favor, faça login para continuar.'),
+        Text('Olá! Bem-vindo ao app escolar.', style: textTheme.titleLarge),
+        Text(
+          'Por favor, faça login para continuar.',
+          style: textTheme.bodyLarge,
+        ),
         TextField(
           controller: _emailController,
           decoration: InputDecoration(labelText: 'Email'),
@@ -45,7 +51,8 @@ class _LoginFormState extends State<LoginForm> {
               child: AppButton(
                 label: 'Entrar',
                 icon: Icons.login,
-                disabled: _emailController.text.isEmpty ||
+                disabled:
+                    _emailController.text.isEmpty ||
                     _passwordController.text.isEmpty,
                 onPressed: () async => await auth.signIn(
                   _emailController.text,
