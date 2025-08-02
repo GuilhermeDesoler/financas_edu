@@ -1,12 +1,27 @@
 import 'package:edu_financas/application/main.dart';
-import 'package:edu_financas/domain/main.dart';
 import 'package:edu_financas/presentation/pages/professor/widgets/main.dart';
 import 'package:edu_financas/presentation/widgets/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ProfessorPage extends StatelessWidget {
+class ProfessorPage extends StatefulWidget {
   const ProfessorPage({super.key});
+
+  @override
+  State<ProfessorPage> createState() => _ProfessorPageState();
+}
+
+class _ProfessorPageState extends State<ProfessorPage> {
+  Future<void> _init() async {
+    final provider = Provider.of<ProfessorPageProvider>(context, listen: false);
+    await provider.fetchData();
+  }
+
+  @override
+  void initState() {
+    Future.microtask(_init);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,119 +30,67 @@ class ProfessorPage extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return Consumer<ProfessorPageProvider>(
-      builder: (_, professorProvider, __) {
-        return AppPage(
-          body: Column(
-            spacing: 16,
-            children: [
-              Row(children: [Expanded(child: _warningMessage())]),
-              SectionCard(
-                label: 'Painel do professor',
-                content: device.isPhone
-                    ? _mobileLayout(professorProvider, colorScheme)
-                    : _desktopLayout(professorProvider, colorScheme),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _desktopLayout(
-    ProfessorPageProvider professorProvider,
-    ColorScheme colorScheme,
-  ) {
-    return Column(
-      spacing: 16,
-      children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: _refreshButton(professorProvider),
-        ),
-        StatisticsSection(provider: professorProvider),
-        Row(
-          spacing: 16,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(child: StudentsList(provider: professorProvider)),
-            Expanded(child: _registerStudentForm()),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _mobileLayout(
-    ProfessorPageProvider professorProvider,
-    ColorScheme colorScheme,
-  ) {
-    return Column(
-      spacing: 16,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: _refreshButton(professorProvider),
-        ),
-        StatisticsSection(provider: professorProvider),
-        _registerStudentForm(),
-        StudentsList(provider: professorProvider),
-      ],
-    );
-  }
-
-  Widget _refreshButton(ProfessorPageProvider professorProvider) {
-    return AppButton(
-      type: ButtonType.outline,
-      label: 'Buscar',
-      icon: Icons.download_outlined,
-      loading: professorProvider.loading,
-      onPressed: professorProvider.fetchData,
-    );
-  }
-
-  Widget _registerStudentForm() {
-    return InfoCard(
-      label: 'Controle de fundos',
-      content: Column(
-        spacing: 12,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+    return AppPage(
+      body: Column(
+        spacing: 16,
         children: [
-          TextField(decoration: InputDecoration(labelText: 'Aluno')),
-          Row(
-            spacing: 12,
-            children: [
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(labelText: 'Valor'),
-                ),
-              ),
-              Expanded(child: _transactionTypeMenu()),
-            ],
-          ),
-          TextField(decoration: InputDecoration(labelText: 'Descrição')),
-          FilledButton.icon(
-            onPressed: () => print('Cadastrado'),
-            label: Text('Cadastrar'),
+          Row(children: [Expanded(child: _warningMessage())]),
+          SectionCard(
+            label: 'Painel do professor',
+            content: device.isPhone
+                ? _mobileLayout(colorScheme)
+                : _desktopLayout(colorScheme),
           ),
         ],
       ),
     );
   }
 
-  Widget _transactionTypeMenu() {
-    return DropdownMenu<TransactionType>(
-      label: Text('Tipo de transação'),
-      initialSelection: TransactionType.debit,
-      onSelected: (value) => print(value?.label),
-      inputDecorationTheme: InputDecorationTheme(
-        constraints: BoxConstraints(minWidth: double.infinity),
-      ),
-      dropdownMenuEntries: TransactionType.values.map((e) {
-        return DropdownMenuEntry<TransactionType>(value: e, label: e.label);
-      }).toList(),
+  Widget _desktopLayout(ColorScheme colorScheme) {
+    return Column(
+      spacing: 16,
+      children: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: _refreshButton(),
+        ),
+        StatisticsSection(),
+        Row(
+          spacing: 16,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(child: StudentsList()),
+            Expanded(child: TransactionSection()),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _mobileLayout(ColorScheme colorScheme) {
+    return Column(
+      spacing: 16,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: _refreshButton(),
+        ),
+        StatisticsSection(),
+        TransactionSection(),
+        StudentsList(),
+      ],
+    );
+  }
+
+  Widget _refreshButton() {
+    return Consumer<ProfessorPageProvider>(
+      builder: (_, provider, __) {
+        return RefreshButon(
+          loading: provider.loading,
+          onPressed: provider.fetchData,
+        );
+      },
     );
   }
 

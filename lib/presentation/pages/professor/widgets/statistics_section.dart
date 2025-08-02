@@ -1,22 +1,10 @@
 import 'package:edu_financas/application/main.dart';
 import 'package:edu_financas/presentation/widgets/main.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class StatisticsSection extends StatefulWidget {
-  const StatisticsSection({required this.provider, super.key});
-
-  final ProfessorPageProvider provider;
-
-  @override
-  State<StatisticsSection> createState() => _StatisticsSectionState();
-}
-
-class _StatisticsSectionState extends State<StatisticsSection> {
-  @override
-  void initState() {
-    widget.provider.fetchData();
-    super.initState();
-  }
+class StatisticsSection extends StatelessWidget {
+  const StatisticsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,31 +13,33 @@ class _StatisticsSectionState extends State<StatisticsSection> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    if (device.isDesktop) {
-      return Row(
+    return Consumer<ProfessorPageProvider>(builder: (_, provider, __) {
+      if (device.isDesktop) {
+        return Row(
+          spacing: 16,
+          children: [
+            Expanded(child: _studentCard(provider, colorScheme)),
+            Expanded(child: _usedTotal(provider, colorScheme)),
+            Expanded(child: _studentAverage(provider, colorScheme)),
+          ],
+        );
+      }
+
+      return Column(
         spacing: 16,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(child: _studentCard(colorScheme)),
-          Expanded(child: _usedTotal(colorScheme)),
-          Expanded(child: _studentAverage(colorScheme)),
+          _studentCard(provider, colorScheme),
+          _usedTotal(provider, colorScheme),
+          _studentAverage(provider, colorScheme),
         ],
       );
-    }
-
-    return Column(
-      spacing: 16,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _studentCard(colorScheme),
-        _usedTotal(colorScheme),
-        _studentAverage(colorScheme),
-      ],
-    );
+    });
   }
 
-  Widget _studentCard(ColorScheme colorScheme) {
+  Widget _studentCard(ProfessorPageProvider provider, ColorScheme colorScheme) {
     final studentsAmount =
-        widget.provider.professor?.students.length.toString() ?? '--';
+        provider.professor?.students.length.toString() ?? '--';
 
     return StatisticCard(
       label: 'Total de alunos',
@@ -59,9 +49,8 @@ class _StatisticsSectionState extends State<StatisticsSection> {
     );
   }
 
-  Widget _usedTotal(ColorScheme colorScheme) {
-    final amountSpent =
-        widget.provider.professor?.spent.toStringAsFixed(2) ?? '--';
+  Widget _usedTotal(ProfessorPageProvider provider, ColorScheme colorScheme) {
+    final amountSpent = provider.professor?.spent.toStringAsFixed(2) ?? '--';
 
     return StatisticCard(
       label: 'Total distribuído',
@@ -71,10 +60,10 @@ class _StatisticsSectionState extends State<StatisticsSection> {
     );
   }
 
-  Widget _studentAverage(ColorScheme colorScheme) {
-    final average = widget.provider.average == null
-        ? '--'
-        : widget.provider.average!.toStringAsFixed(2);
+  Widget _studentAverage(
+      ProfessorPageProvider provider, ColorScheme colorScheme) {
+    final average =
+        provider.average == null ? '--' : provider.average!.toStringAsFixed(2);
 
     return StatisticCard(
       label: 'Média por aluno',
