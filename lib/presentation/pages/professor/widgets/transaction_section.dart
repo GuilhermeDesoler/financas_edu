@@ -63,8 +63,7 @@ class _TransactionSectionState extends State<TransactionSection> {
     return DropdownButtonFormField<String>(
       hint: Text('Aluno'),
       onChanged: (value) => print(value),
-      items:
-          provider.students?.map((student) {
+      items: provider.students?.map((student) {
             return DropdownMenuItem<String>(
               value: student.name,
               child: Text(student.name),

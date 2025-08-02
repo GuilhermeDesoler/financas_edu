@@ -4,8 +4,24 @@ import 'package:edu_financas/presentation/widgets/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ProfessorPage extends StatelessWidget {
+class ProfessorPage extends StatefulWidget {
   const ProfessorPage({super.key});
+
+  @override
+  State<ProfessorPage> createState() => _ProfessorPageState();
+}
+
+class _ProfessorPageState extends State<ProfessorPage> {
+  Future<void> _init() async {
+    final provider = Provider.of<ProfessorPageProvider>(context, listen: false);
+    await provider.fetchData();
+  }
+
+  @override
+  void initState() {
+    Future.microtask(_init);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,43 +30,36 @@ class ProfessorPage extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return Consumer<ProfessorPageProvider>(
-      builder: (_, professorProvider, __) {
-        return AppPage(
-          body: Column(
-            spacing: 16,
-            children: [
-              Row(children: [Expanded(child: _warningMessage())]),
-              SectionCard(
-                label: 'Painel do professor',
-                content: device.isPhone
-                    ? _mobileLayout(professorProvider, colorScheme)
-                    : _desktopLayout(professorProvider, colorScheme),
-              ),
-            ],
+    return AppPage(
+      body: Column(
+        spacing: 16,
+        children: [
+          Row(children: [Expanded(child: _warningMessage())]),
+          SectionCard(
+            label: 'Painel do professor',
+            content: device.isPhone
+                ? _mobileLayout(colorScheme)
+                : _desktopLayout(colorScheme),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 
-  Widget _desktopLayout(
-    ProfessorPageProvider professorProvider,
-    ColorScheme colorScheme,
-  ) {
+  Widget _desktopLayout(ColorScheme colorScheme) {
     return Column(
       spacing: 16,
       children: [
         Align(
           alignment: Alignment.centerRight,
-          child: _refreshButton(professorProvider),
+          child: _refreshButton(),
         ),
-        StatisticsSection(provider: professorProvider),
+        StatisticsSection(),
         Row(
           spacing: 16,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Expanded(child: StudentsList(provider: professorProvider)),
+            Expanded(child: StudentsList()),
             Expanded(child: TransactionSection()),
           ],
         ),
@@ -58,32 +67,30 @@ class ProfessorPage extends StatelessWidget {
     );
   }
 
-  Widget _mobileLayout(
-    ProfessorPageProvider professorProvider,
-    ColorScheme colorScheme,
-  ) {
+  Widget _mobileLayout(ColorScheme colorScheme) {
     return Column(
       spacing: 16,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Align(
           alignment: Alignment.centerRight,
-          child: _refreshButton(professorProvider),
+          child: _refreshButton(),
         ),
-        StatisticsSection(provider: professorProvider),
+        StatisticsSection(),
         TransactionSection(),
-        // StudentsList(provider: professorProvider),
+        StudentsList(),
       ],
     );
   }
 
-  Widget _refreshButton(ProfessorPageProvider professorProvider) {
-    return AppButton(
-      type: ButtonType.outline,
-      label: 'Buscar',
-      icon: Icons.download_outlined,
-      loading: professorProvider.loading,
-      onPressed: professorProvider.fetchData,
+  Widget _refreshButton() {
+    return Consumer<ProfessorPageProvider>(
+      builder: (_, provider, __) {
+        return RefreshButon(
+          loading: provider.loading,
+          onPressed: provider.fetchData,
+        );
+      },
     );
   }
 
