@@ -1,5 +1,4 @@
 import 'package:edu_financas/application/main.dart';
-import 'package:edu_financas/domain/main.dart';
 import 'package:edu_financas/presentation/pages/professor/widgets/main.dart';
 import 'package:edu_financas/presentation/widgets/main.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +50,8 @@ class ProfessorPage extends StatelessWidget {
           spacing: 16,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(child: StudentsList(provider: professorProvider)),
-            Expanded(child: _registerStudentForm()),
+            // Expanded(child: StudentsList(provider: professorProvider)),
+            Expanded(child: TransactionSection()),
           ],
         ),
       ],
@@ -72,8 +71,8 @@ class ProfessorPage extends StatelessWidget {
           child: _refreshButton(professorProvider),
         ),
         StatisticsSection(provider: professorProvider),
-        _registerStudentForm(),
-        StudentsList(provider: professorProvider),
+        TransactionSection(),
+        // StudentsList(provider: professorProvider),
       ],
     );
   }
@@ -85,49 +84,6 @@ class ProfessorPage extends StatelessWidget {
       icon: Icons.download_outlined,
       loading: professorProvider.loading,
       onPressed: professorProvider.fetchData,
-    );
-  }
-
-  Widget _registerStudentForm() {
-    return InfoCard(
-      label: 'Controle de fundos',
-      content: Column(
-        spacing: 12,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TextField(decoration: InputDecoration(labelText: 'Aluno')),
-          Row(
-            spacing: 12,
-            children: [
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(labelText: 'Valor'),
-                ),
-              ),
-              Expanded(child: _transactionTypeMenu()),
-            ],
-          ),
-          TextField(decoration: InputDecoration(labelText: 'Descrição')),
-          FilledButton.icon(
-            onPressed: () => print('Cadastrado'),
-            label: Text('Cadastrar'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _transactionTypeMenu() {
-    return DropdownMenu<TransactionType>(
-      label: Text('Tipo de transação'),
-      initialSelection: TransactionType.debit,
-      onSelected: (value) => print(value?.label),
-      inputDecorationTheme: InputDecorationTheme(
-        constraints: BoxConstraints(minWidth: double.infinity),
-      ),
-      dropdownMenuEntries: TransactionType.values.map((e) {
-        return DropdownMenuEntry<TransactionType>(value: e, label: e.label);
-      }).toList(),
     );
   }
 
